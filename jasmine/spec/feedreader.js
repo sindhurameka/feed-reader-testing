@@ -106,14 +106,17 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
          beforeEach(function(done){
-                loadFeed(0,done);
-                feedContent = $('.feed').html();
+                loadFeed(0,function(){
+                    feedContent = $('.feed').html();
+                    done();
+                });
             });
 
          it('When new feed is loaded', function(done){
-            loadFeed(1,done);
-            expect($('.feed').html).not.toEqual(feedContent);
-            done();
+            loadFeed(1,function(){
+                expect($('.feed').html).not.toEqual(feedContent);
+                done();
+            });
          });
     });
 }());
